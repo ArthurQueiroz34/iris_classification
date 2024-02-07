@@ -24,3 +24,13 @@ classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy',
 
 classifier.fit(forecasters_train, division_train, batch_size = 10,
                epochs = 1000)
+
+result = classifier.evaluate(forecasters_test, division_test)
+forecasts = classifier.predict(forecasters_test)
+forecasts = (forecasts > 0.5)
+import numpy as np
+division_test2 = [np.argmax(t) for t in division_test]
+forecasts2 = [np.argmax(t) for t in forecasts]
+
+from sklearn.metrics import confusion_matrix
+matrix = confusion_matrix(forecasts2, division_test2)
