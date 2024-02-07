@@ -1,10 +1,16 @@
 import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.utils import np_utils
 
 base = pd.read_csv('iris.csv')
 forecasters = base.iloc[:, 0:4].values
 division = base.iloc[:, 4].values
+
+from sklearn.preprocessing import LabelEncoder
+labelencoder = LabelEncoder()
+division = labelencoder.fit.transform(division)
+division_dummy = np_utils.to_categorical(division)
 
 from sklearn.model_selection import train_test_split
 forecasters_train, forecasters_test, division_train, division_test = train_test_split(forecasters, division, test_size=0.25)
